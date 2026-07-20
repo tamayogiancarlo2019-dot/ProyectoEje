@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Proyecto de Prueba - Docker & CI/CD</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 80px auto;
+      text-align: center;
+      background: #f4f4f4;
+    }
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { color: #333; }
+    #mensaje { font-size: 1.2em; color: #2563eb; margin-top: 15px; }
+    #fecha { color: #888; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🚀 Proyecto de Prueba</h1>
+    <p>Frontend (Nginx) → Backend (Express) → Docker → GitHub Actions → Docker Hub</p>
+    <div id="mensaje">Cargando mensaje del backend...</div>
+    <div id="fecha"></div>
+  </div>
+
+  <script>
+    // En docker-compose, el navegador llama directo al puerto publicado del backend
+    fetch("http://localhost:5000/api/status")
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("mensaje").textContent = data.mensaje;
+        document.getElementById("fecha").textContent = "Última respuesta: " + data.fecha;
+      })
+      .catch(() => {
+        document.getElementById("mensaje").textContent = "No se pudo conectar al backend ❌";
+      });
+  </script>
+</body>
+</html>
